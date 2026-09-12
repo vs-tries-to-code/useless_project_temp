@@ -25,44 +25,60 @@ This application looks at the faces of cars, and translates what they feel.
 ### Technologies/Components Used
 For Software:
 - Python 3.10
-- Streamlit
-- Google GenAI API
+- Streamlit for UI
+- Google GenAI API for the 
+- PIL to save image and contour it
+- pydantic to extract facial features
 
 
-### Implementation
-For Software:
 # Installation
-[commands]
+```git clone https://github.com/vs-tries-to-code/useless_project_temp.git```
+```pip install requirements.txt```
+
 
 # Run
-[commands]
+```streamlit run app.py```
 
 ### Project Documentation
-For Software:
 
+
+```mermaid
+flowchart TD
+    A[User provides car image] --> A1{Input method}
+    A1 -->|Upload| A2[File uploader]
+    A1 -->|Live camera| A3[Camera input]
+    A2 --> B[Image loaded with PIL]
+    A3 --> B
+
+    B --> C[Click 'Diagnose Car Emotions']
+    C --> D[Send image + prompt to Gemini API]
+    D --> E["Structured output schema (Pydantic)\nrequests 4 contours + emotion line"]
+    E --> F[Gemini returns JSON:\nleft_headlight, right_headlight,\nlogo, lower_grille_mouth, emotion_diagnosis]
+
+    F --> G[Scale each point set\nfrom 0-1000 range to actual image pixels]
+    G --> H[Draw polygon outline\nfor each of the 4 features\non a copy of the image]
+
+    H --> I[Display results]
+    I --> I1[Left column: contoured car image]
+    I --> I2[Right column: emotion diagnosis text]
+```
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+<img width="1178" height="850" alt="image" src="https://github.com/user-attachments/assets/35cd0658-0c86-47a5-a826-0f5de6bee673" />
+Uploading car image
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+<img width="1018" height="507" alt="image" src="https://github.com/user-attachments/assets/b65f7d89-350a-4bca-9b5c-b4222c8d0c07" />
+Emotion diagnosis
 
 
-### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+https://drive.google.com/file/d/1gstqzja9aatf7R7SEqk35XQFGAGbT02r/view?usp=drive_link
+Video demonstrates the working of emotion diagnosis
 
-# Additional Demos
-[Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+Vishnusree - Idea
+Google Gemini - its implementation
+
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
