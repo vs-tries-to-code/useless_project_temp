@@ -11,7 +11,16 @@ import json
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=GEMINI_API_KEY)
+try:
+    GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+except (FileNotFoundError, KeyError):
+    load_dotenv()
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
+if not GEMINI_API_KEY:
+    st.error("GEMINI_API_KEY is missing! Please set it in Streamlit Secrets or your local .env file.")
+    st.stop()
+    
 st.title("Car eMotion")
 st.write("Diagnose a car's emotional state and trace its facial features via upload or live camera.")
 
